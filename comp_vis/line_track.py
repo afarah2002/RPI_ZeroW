@@ -3,8 +3,13 @@ import numpy as np
 import socket
 import cPickle 
 from copy import deepcopy
+import zmq
 
 #this is the line following code for the AVE
+
+context = zmq.Context()
+footage_socket = context.socket(zmq.PUB)
+footage_socket.connect('tcp://localhost:8082')
 
 def detectLine(feed):#detects contrasting lines in feed
 	upper_thresh = 0
@@ -21,10 +26,11 @@ def detectLine(feed):#detects contrasting lines in feed
 		print("processing")
 
 		print("exporting image....")
-		clientsocket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-		clientsocket.connect(('localhost',8082)) #connect to network
-		data = cPickle.dumps(img)
-		clientsocket.sendall(struct.pack("H", len(data))+data)
+		footage_socket.sendall(img)
+		# clientsocket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+		# clientsocket.connect(('localhost',8082)) #connect to network
+		# data = cPickle.dumps(img)
+		# clientsocket.sendall(struct.pack("H", len(data))+data)
 
 # def exportImage(img): #exports image to new port 
 	

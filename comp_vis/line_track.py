@@ -7,34 +7,32 @@ import zmq
 
 #this is the line following code for the AVE
 
-context = zmq.Context()
-footage_socket = context.socket(zmq.PUB)
-footage_socket.connect('tcp://localhost:8082')
+# context = zmq.Context()
+# footage_socket = context.socket(zmq.PUB)
+# footage_socket.connect('tcp://localhost:8082')
 
 def detectLine(feed):#detects contrasting lines in feed
-	upper_thresh = 0
-	lower_thresh = 10 #contrast thresholds
-
-	k_dim = 5
-	kernel = np.ones((k_dim,k_dim),np.uint8)
-
-	cap = cv2.VideoCapture(feed) #access webcam feed from IPport#
-	while (cap.isOpened()):
+	cap = cv2.VideoCapture(feed)
+	print cap.isOpened()
+	while cap.isOpened():
 		ret, frame = cap.read()
-		img = cv2.inRange(frame,lower_thresh,upper_thresh)
-		img = cv2.morphologyEx(img,cv2.MORPH_CLOSE,kernel) #frame morphology for contrast
-		print("processing")
+		# frame = np.float32(frame)
+		gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-		print("exporting image....")
-		footage_socket.sendall(img)
-		# clientsocket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-		# clientsocket.connect(('localhost',8082)) #connect to network
-		# data = cPickle.dumps(img)
-		# clientsocket.sendall(struct.pack("H", len(data))+data)
+		grayscale = cv2.imread('frame', cv2.IMREAD_GRAYSCALE)
+		ret, thresh1 = cv2.threshold(grayscale, 0,100, cv2.THRESH_BINARY) 
 
-# def exportImage(img): #exports image to new port 
-	
-	# while True:
+		k_dim = 2
+		kernel = np.ones((k_dim,k_dim))/(k_dim^2)
+		erode = cv2.erode(thresh1, kernel, iterations=1)
+
+		cv2.imshow('thresh1',gray)
+
+		if cv2.waitKey(5) & 0xFF == ord('q'):
+			break
+	cap.release()
+	cv2.destroyAllWindows()
 		
 
 detectLine('http://192.168.1.180:8081/')
+# detectLine('testfootage1.mp4')

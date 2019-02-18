@@ -16,17 +16,41 @@ def detectLine(feed):#detects contrasting lines in feed
 	print cap.isOpened()
 	while cap.isOpened():
 		ret, frame = cap.read()
-		# frame = np.float32(frame)
-		gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-		grayscale = cv2.imread('frame', cv2.IMREAD_GRAYSCALE)
-		ret, thresh1 = cv2.threshold(grayscale, 0,100, cv2.THRESH_BINARY) 
+		grayscale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+		ret, thresh1 = cv2.threshold(grayscale, 65,255, cv2.THRESH_BINARY_INV) 
+		k_dim = 10
+		kernel = np.ones((k_dim,k_dim),np.uint8)
+		thresh1 = cv2.erode(thresh1, kernel, iterations=4)
 
-		k_dim = 2
-		kernel = np.ones((k_dim,k_dim))/(k_dim^2)
-		erode = cv2.erode(thresh1, kernel, iterations=1)
+		im2,contours,hierarchy = cv2.findContours(thresh1, 1, 2)
+		if len(contours) > 0:
+			max_contours = max(contours, key = lambda x: cv2.contourArea(x))
 
-		cv2.imshow('thresh1',gray)
+			rows,cols = thresh1.shape[:2]
+			img_center_x, img_center_y = rows/2, cols/2
+			p_frame_center = (img_center_x,img_center_y)
+
+			[vx,vy,x,y] = cv2.fitLine(max_contours, cv2.DIST_L2,0,0.01,0.01)
+			
+			# switch to proper coordinates
+
+			x -= img_center_x
+			y = -(y - img_center_y)
+			
+			
+			vx = vx
+			vy *= -1
+
+			if vx == 0:
+				vx = 0.01
+
+
+			m = vy/vx
+			b = y - m*x
+		print(np.arctan(m)*180/np.pi)
+		cv2.imshow('thresh1', thresh1)
+		
 
 		if cv2.waitKey(5) & 0xFF == ord('q'):
 			break

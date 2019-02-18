@@ -49,7 +49,6 @@ def detectLine(feed):#detects contrasting lines in feed
 			m = vy/vx
 			b = y - m*x
 		print(np.arctan(m)*180/np.pi)
-		cv2.imshow('thresh1', thresh1)
 		
 
 		if cv2.waitKey(5) & 0xFF == ord('q'):

@@ -46,7 +46,7 @@ def feed_process(feed):
 
 			m = vy/vx
 			b = y - m*x
-		print(np.arctan(m)*180/np.pi)
+		print(np.arctan(1/m)*180/np.pi)
 		cv2.imshow('thresh1', thresh1)
 		
 

@@ -6,8 +6,12 @@ from copy import deepcopy
 import random
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
-# np.set_printoptions(threshold=np.nan)
 
+#Arduino imports
+from pyserial import Serial
+port = '/dev/ttyS2'
+#arduino setup
+ard = pyserial.Serial(port) 
 
 def feed_process(feed):
 	cap = cv2.VideoCapture(feed)
@@ -46,7 +50,12 @@ def feed_process(feed):
 
 			m = vy/vx
 			b = y - m*x
-		print(np.arctan(m)*180/np.pi)
+			im_angle = np.arctan(1/m)*180/np.pi
+		# print(im_angle)
+		servo_angle = float(abs(im_angle - 90))
+		ard.write(servo_angle)
+		time.sleep(1)
+		print("Servo angle:", servo_angle)
 		cv2.imshow('thresh1', thresh1)
 		
 

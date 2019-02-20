@@ -1,15 +1,9 @@
 import cv2
 import numpy as np
-import socket
-import cPickle 
 from copy import deepcopy
-import zmq
+
 
 #this is the line following code for the AVE
-
-# context = zmq.Context()
-# footage_socket = context.socket(zmq.PUB)
-# footage_socket.connect('tcp://localhost:8082')
 
 def detectLine(feed):#detects contrasting lines in feed
 	cap = cv2.VideoCapture(feed)
@@ -49,6 +43,7 @@ def detectLine(feed):#detects contrasting lines in feed
 			m = vy/vx
 			b = y - m*x
 		print(np.arctan(m)*180/np.pi)
+		cv2.imshow('thresh1',thresh1)
 		
 
 	# 	if cv2.waitKey(5) & 0xFF == ord('q'):

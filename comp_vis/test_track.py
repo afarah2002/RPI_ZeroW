@@ -8,10 +8,12 @@ from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 
 #Arduino imports
-from pyserial import Serial
-port = '/dev/ttyS2'
+import serial
+port = '/dev/ttyACM0'
+# port = 'COM3'
 #arduino setup
-ard = pyserial.Serial(port) 
+ard = serial.Serial(port, 9600,timeout=3.0) 
+
 
 def feed_process(feed):
 	cap = cv2.VideoCapture(feed)
@@ -53,7 +55,7 @@ def feed_process(feed):
 			im_angle = np.arctan(1/m)*180/np.pi
 		# print(im_angle)
 		servo_angle = float(abs(im_angle - 90))
-		ard.write(servo_angle)
+		ard.write("servo_angle")
 		time.sleep(1)
 		print("Servo angle:", servo_angle)
 		cv2.imshow('thresh1', thresh1)

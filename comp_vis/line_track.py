@@ -51,10 +51,10 @@ def detectLine(feed):#detects contrasting lines in feed
 		print(np.arctan(m)*180/np.pi)
 		
 
-	# 	if cv2.waitKey(5) & 0xFF == ord('q'):
-	# 		break
-	# cap.release()
-	# cv2.destroyAllWindows()
+		if cv2.waitKey(5) & 0xFF == ord('q'):
+			break
+	cap.release()
+	cv2.destroyAllWindows()
 		
 
 detectLine('http://192.168.1.180:8081/')

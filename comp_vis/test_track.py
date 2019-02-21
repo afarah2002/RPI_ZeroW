@@ -13,7 +13,7 @@ port = '/dev/ttyACM0'
 # port = 'COM3'
 #arduino setup
 ard = serial.Serial(port, 9600,timeout=3.0) 
-
+angles = [0]
 
 def feed_process(feed):
 	cap = cv2.VideoCapture(feed)
@@ -53,11 +53,14 @@ def feed_process(feed):
 			m = vy/vx
 			b = y - m*x
 			im_angle = np.arctan(1/m)*180/np.pi
+
 		# print(im_angle)
-		servo_angle = float(abs(im_angle - 90))
-		ard.write("servo_angle")
-		time.sleep(1)
-		print("Servo angle:", servo_angle)
+		servo_angle = str(round(int(abs(im_angle[0] - 90)), -1))
+		if servo_angle != angles[-1]:
+			angles.append(servo_angle)
+		ard.write(angles[-1])
+		print("Servo angle:", angles[-1])
+		# print(type(servo_angle))
 		cv2.imshow('thresh1', thresh1)
 		
 
@@ -65,6 +68,8 @@ def feed_process(feed):
 			break
 	cap.release()
 	cv2.destroyAllWindows()
+
+# def send_angles(im_angle)
 
 feed_process('testfootage1.avi')
 

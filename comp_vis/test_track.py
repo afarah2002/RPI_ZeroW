@@ -6,6 +6,7 @@ from copy import deepcopy
 import random
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
+import struct 
 
 #Arduino imports
 import serial
@@ -55,14 +56,16 @@ def feed_process(feed):
 			im_angle = np.arctan(1/m)*180/np.pi
 
 		# print(im_angle)
-		servo_angle = str(round(int(abs(im_angle[0] - 90)), -1))
+		servo_angle = round(int(abs(im_angle[0] - 90)), -1)
 		if servo_angle != angles[-1]:
 			angles.append(servo_angle)
-		ard.write(angles[-1])
-		print("Servo angle:", angles[-1])
+		binary = struct.pack('>B', angles[-1])
+		ard.write(binary)
+		# time.sleep(.25)
+		# ard.write(angles[-1])
+		print("Servo angle:", angles[-1],binary)
 		# print(type(servo_angle))
 		cv2.imshow('thresh1', thresh1)
-		
 
 		if cv2.waitKey(5) & 0xFF == ord('q'):
 			break

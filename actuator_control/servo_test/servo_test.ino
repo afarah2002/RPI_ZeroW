@@ -8,6 +8,7 @@ void setup() {
   // put your setup code here, to run once:
   Servo1.attach(servoPin);
   Serial.begin(9600);
+  Servo1.write(90);
 }
 
 void loop() {

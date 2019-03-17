@@ -17,7 +17,7 @@ def detectLine(feed):#detects contrasting lines in feed
 		kernel = np.ones((k_dim,k_dim),np.uint8)
 		thresh1 = cv2.erode(thresh1, kernel, iterations=4)
 
-		im2,contours,hierarchy = cv2.findContours(thresh1, 1, 2)
+		contours,hierarchy = cv2.findContours(thresh1, 1, 2)
 		if len(contours) > 0:
 			max_contours = max(contours, key = lambda x: cv2.contourArea(x))
 

@@ -52,5 +52,5 @@ def detectLine(feed):#detects contrasting lines in feed
 	cv2.destroyAllWindows()
 		
 
-detectLine('http://192.168.1.180:8081/')
+detectLine('http://192.168.1.216:8082/')
 # detectLine('testfootage1.mp4')

@@ -25,7 +25,7 @@ def detectLine(feed):#detects contrasting lines in feed
 			img_center_x, img_center_y = rows/2, cols/2
 			p_frame_center = (img_center_x,img_center_y)
 
-			[vx,vy,x,y] = cv2.fitLine(max_contours, cv2.DIST_L2,0,0.01,0.01)
+			[vx,vy,x,y] = cv2.fitLine(max_contours, cv2.cv.CV_DIST_L2,0,0.01,0.01)
 			
 			# switch to proper coordinates
 

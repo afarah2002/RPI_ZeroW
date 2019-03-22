@@ -13,9 +13,9 @@ def detectLine(feed):#detects contrasting lines in feed
 
 		grayscale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 		ret, thresh1 = cv2.threshold(grayscale, 65,255, cv2.THRESH_BINARY_INV) 
-		k_dim = 10
+		k_dim = 5
 		kernel = np.ones((k_dim,k_dim),np.uint8)
-		thresh1 = cv2.erode(thresh1, kernel, iterations=4)
+		thresh1 = cv2.erode(thresh1, kernel, iterations=1)
 
 		contours,hierarchy = cv2.findContours(thresh1, 1, 2)
 		if len(contours) > 0:

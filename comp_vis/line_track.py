@@ -12,7 +12,7 @@ def detectLine(feed):#detects contrasting lines in feed
 		ret, frame = cap.read()
 
 		grayscale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-		ret, thresh1 = cv2.threshold(grayscale, 65,255, cv2.THRESH_BINARY_INV) 
+		ret, thresh1 = cv2.threshold(grayscale, 0,50, cv2.THRESH_BINARY_INV) 
 		k_dim = 5
 		kernel = np.ones((k_dim,k_dim),np.uint8)
 		thresh1 = cv2.erode(thresh1, kernel, iterations=1)

@@ -8,22 +8,25 @@ from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 
 #Arduino imports
-from pyserial import Serial
+import Serial
 port = '/dev/ttyS2'
 #arduino setup
-ard = pyserial.Serial(port) 
+ard = serial.Serial(port) 
 
 def feed_process(feed):
 	cap = cv2.VideoCapture(feed)
 	print cap.isOpened()
 	while cap.isOpened():
 		ret, frame = cap.read()
+		bin_thresh_low = 10
+		bin_thresh_high = 15
+		k_dim = 30
+		kernel = np.ones((k_dim,k_dim),np.uint8)
+		thresh1 = cv2.dilate(frame, kernel, iterations=2)
 
 		grayscale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-		ret, thresh1 = cv2.threshold(grayscale, 65,255, cv2.THRESH_BINARY_INV) 
-		k_dim = 10
-		kernel = np.ones((k_dim,k_dim),np.uint8)
-		thresh1 = cv2.erode(thresh1, kernel, iterations=4)
+		ret, thresh1 = cv2.threshold(grayscale, bin_thresh_low,bin_thresh_high, cv2.THRESH_BINARY_INV) 
+		# thresh1 = cv2.adaptiveThreshold(grayscale, 150, cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,11,3)
 
 		im2,contours,hierarchy = cv2.findContours(thresh1, 1, 2)
 		if len(contours) > 0:
@@ -51,11 +54,12 @@ def feed_process(feed):
 			m = vy/vx
 			b = y - m*x
 			im_angle = np.arctan(1/m)*180/np.pi
-		# print(im_angle)
-		servo_angle = float(abs(im_angle - 90))
-		ard.write(servo_angle)
-		time.sleep(1)
-		print("Servo angle:", servo_angle)
+			# print(im_angle)
+			servo_angle = float(abs(im_angle - 90))
+			ard.write(servo_angle)
+			# time.sleep(.005)
+			print("Servo angle:", servo_angle)
+
 		cv2.imshow('thresh1', thresh1)
 		
 
@@ -64,5 +68,5 @@ def feed_process(feed):
 	cap.release()
 	cv2.destroyAllWindows()
 
-feed_process('testfootage1.avi')
+feed_process('testfootage2.avi')
 

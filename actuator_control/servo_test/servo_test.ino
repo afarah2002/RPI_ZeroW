@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
- int servoPin = 9;
+int servoPin = 9;
 Servo Servo1;
 void setup() {
   // put your setup code here, to run once:

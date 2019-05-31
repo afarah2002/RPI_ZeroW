@@ -26,7 +26,15 @@ if (success):
 			print("flying state is %s" % mambo.sensors.flying_state)
 			print("Rolling right")
 			mambo.fly_direct(roll=20, pitch=0, yaw=0, vertical_movement=0, duration=1)
-			mambo.fly_direct(roll=-20,pitch=0, yaw=0, vertical_movement=0, duration=1)
+			mambo.fly_direct(roll=-20,pitch=0, yaw=0, vertical_movement=0, duration=1) #this actually decelerates and stops it, doesn't roll it back
+
+			print("landing")
+			print("flying state is %s" % mambo.sensors.flying_state)
+			mambo.safe_land(5)
+			mambo.smart_sleep(5)
+
+		print("disconnect")
+		mambo.disconnect()
 
 	except:
 		print("can't connect, sorry!")

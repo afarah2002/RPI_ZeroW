@@ -27,6 +27,15 @@ if (success):
 			print("Rolling right")
 			mambo.fly_direct(roll=20, pitch=0, yaw=0, vertical_movement=0, duration=1)
 			mambo.fly_direct(roll=-20,pitch=0, yaw=0, vertical_movement=0, duration=1) #this actually decelerates and stops it, doesn't roll it back
+			
+			mambo.fly_direct(roll=0, pitch=20, yaw=0, vertical_movement=0, duration=1)
+			mambo.fly_direct(roll=0,pitch=-20, yaw=0, vertical_movement=0, duration=1) #this actually decelerates and stops it, doesn't roll it back
+			
+			mambo.fly_direct(roll=-20, pitch=0, yaw=0, vertical_movement=0, duration=1)
+			mambo.fly_direct(roll=20,pitch=0, yaw=0, vertical_movement=0, duration=1) #this actually decelerates and stops it, doesn't roll it back
+			
+			mambo.fly_direct(roll=0, pitch=-20, yaw=0, vertical_movement=0, duration=1)
+			mambo.fly_direct(roll=0,pitch=20, yaw=0, vertical_movement=0, duration=1) #this actually decelerates and stops it, doesn't roll it back
 
 			print("landing")
 			print("flying state is %s" % mambo.sensors.flying_state)

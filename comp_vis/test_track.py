@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import serial
 port = '/dev/ttyACM0'
 # arduino setup
-# ard = serial.Serial(port) 
+ard = serial.Serial(port) 
 
 def feed_process(feed):
 	cap = cv2.VideoCapture(feed)
@@ -68,7 +68,7 @@ def feed_process(feed):
 			im_angle = np.arctan(1/m)*180/np.pi
 			# print(im_angle)
 			servo_angle = float(abs(im_angle - 90))
-			# ard.write(servo_angle)
+			ard.write(servo_angle)
 			#drawing the line:
 			line_x_val1 = img_center_x-1000*vx
 			line_y_val1 = img_center_y-1000*-vy

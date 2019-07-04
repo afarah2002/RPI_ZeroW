@@ -70,19 +70,19 @@ def feed_process(feed):
 			servo_angle = float(abs(im_angle - 90))
 			ard.write(str(servo_angle))
 			#drawing the line:
-			line_x_val1 = img_center_x-1000*vx
-			line_y_val1 = img_center_y-1000*-vy
+			# line_x_val1 = img_center_x-1000*vx
+			# line_y_val1 = img_center_y-1000*-vy
 
-			line_x_val2 = img_center_x+1000*vx
-			line_y_val2 = img_center_y+1000*-vy
+			# line_x_val2 = img_center_x+1000*vx
+			# line_y_val2 = img_center_y+1000*-vy
 
-			print(x,y,vx,vy)
-			cv2.line(mask, (line_x_val1,line_y_val1), (line_x_val2,line_y_val2), (255,255,255), 5)
+			# print(x,y,vx,vy)
+			# cv2.line(mask, (line_x_val1,line_y_val1), (line_x_val2,line_y_val2), (255,255,255), 5)
 
-			time.sleep(.01)
+			# time.sleep(.01)
 			print("Servo angle:", servo_angle)
 
-		cv2.imshow('mask', mask)
+		# cv2.imshow('mask', mask)
 		
 
 		if cv2.waitKey(5) & 0xFF == ord('q'):

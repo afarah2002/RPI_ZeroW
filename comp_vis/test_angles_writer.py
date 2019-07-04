@@ -12,6 +12,6 @@ ard = serial.Serial(port)
 
 angles = list(np.arange(0,180))
 for i in angles:
-	time.sleep(.25)
+	time.sleep(.1)
 	print(i)
 	ard.write(str(i))

@@ -68,7 +68,7 @@ def feed_process(feed):
 			im_angle = np.arctan(1/m)*180/np.pi
 			# print(im_angle)
 			servo_angle = float(abs(im_angle - 90))
-			ard.write(servo_angle)
+			ard.write(str(servo_angle))
 			#drawing the line:
 			line_x_val1 = img_center_x-1000*vx
 			line_y_val1 = img_center_y-1000*-vy
@@ -90,5 +90,5 @@ def feed_process(feed):
 	cap.release()
 	cv2.destroyAllWindows()
 
-feed_process('testfootage2.avi')
+feed_process('testfootage1.avi')
 

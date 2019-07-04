@@ -1,7 +1,7 @@
 #----------imports----------#
 import numpy as np
 import serial
-
+import time
 
 
 #----------code starts here!----------#
@@ -12,5 +12,6 @@ ard = serial.Serial(port)
 
 angles = list(np.arange(0,180))
 for i in angles:
+	time.sleep(.25)
 	print(i)
 	ard.write(str(i))

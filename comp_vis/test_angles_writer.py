@@ -10,7 +10,7 @@ import time
 port = '/dev/ttyACM0'
 ard = serial.Serial(port) 
 
-angles = list(np.arange(0,180))
+angles = list(np.arange(0,180,10))
 for i in angles:
 	time.sleep(.1)
 	print(i)
